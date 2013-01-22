@@ -38,6 +38,12 @@ class GestPay {
 		$this->setUseSSL($useSSL);
 		$this->setTest($test);
 	}
+	/** Returns the root URL for the current SSL/test settings.
+	* @return string
+	*/
+	private function getRootURL() {
+		return ($this->getUseSSL() ? 'https://' : 'http://') . ($this->getTest() ? 'testecomm.sella.it' : 'ecomms2s.sella.it');
+	}
 	/** Sets the shop login.
 	* @param string $value The shop login
 	*/
@@ -120,8 +126,7 @@ class GestPay {
 			self::addEncrypt($fields, '', $data['customInfo']);
 			unset($data['customInfo']);
 		}
-		$url = $this->getUseSSL() ? 'https://' : 'http://';
-		$url .= $this->getTest() ? 'testecomm.sella.it' : 'ecomms2s.sella.it';
+		$url = $this->getRootURL();
 		$url .= $this->getUseSSL() ? '/CryptHTTPS/Encrypt.asp' : '/CryptHTTP/Encrypt.asp';
 		$url .= '?a=' . urlencode($this->getShopLogin());
 		$url .= '&b=' . implode(self::ENCRYPT_SEPARATOR, $fields);
@@ -147,6 +152,13 @@ class GestPay {
 			$fields[] = (strlen($key) ? "$key=" : '') . urlencode($value);
 		}
 	}
+	/** Returns the url for payments.
+	* @param string $encryptedString Encrypted string built with GestPay->encrypt().
+	* @return string
+	*/
+	public function getPaymentURL($encryptedString) {
+		return $this->getRootURL() . '/gestpay/pagam.asp?a=' . urlencode($this->getShopLogin()) . '&b=' . $encryptedString;
+	}
 	/** Decrypt an encrypted string.
 	* @param string $cryptedString
 	* @return array The array may contain the following keys:<ul>
@@ -171,7 +183,7 @@ class GestPay {
 	*	<li><b>3dLevel</b> Level of authentication for VBV Visa/Mastercard Securecode transactions (should be FULL or HALF).</li>
 	* </ul>
 	* @throws GestPayException Throws a GestPayException in case of errors.
-	 */
+	*/
 	public function decrypt($cryptedString) {
 		if(!(is_string($cryptedString) && strlen($cryptedString))) {
 			throw GestPayException::fromCode(GestPayException::INVALID_DECRYPT_STRING);
@@ -179,8 +191,7 @@ class GestPay {
 		if(!strlen($this->getShopLogin())) {
 			throw GestPayException::fromCode(GestPayException::INVALID_SHOPLOGIN);
 		}
-		$url = $this->getUseSSL() ? 'https://' : 'http://';
-		$url .= $this->getTest() ? 'testecomm.sella.it' : 'ecomms2s.sella.it';
+		$url = $this->getRootURL();
 		$url .= $this->getUseSSL() ? '/CryptHTTPS/Decrypt.asp' : '/CryptHTTP/Decrypt.asp';
 		$url .= '?a=' . urlencode($this->getShopLogin());
 		$url .= '&b=' . urlencode($cryptedString);
@@ -366,7 +377,7 @@ class GestPay {
 						$headers = substr($response, 0, $p) . "\n";
 						$response = substr($response, $p + 2);
 					}
-					$httpCode =  0;
+					$httpCode = 0;
 					if(preg_match('%(^|\n)HTTP/[\d\.]+ (\d+)%i', $headers, $m)) {
 						$httpCode = @intval($m[2]);
 					}
