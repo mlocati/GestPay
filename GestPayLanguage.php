@@ -43,7 +43,7 @@ class GestPayLanguage {
 	/** Returns all the available language IDs.
 	* @return array[int]
 	*/
-	public static function getAll($includeDismissed) {
+	public static function getAll($includeDismissed = false) {
 		return array(
 			self::IT,
 			self::EN,
