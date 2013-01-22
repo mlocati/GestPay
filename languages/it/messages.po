@@ -1,0 +1,904 @@
+msgid   ""
+msgstr  "Project-Id-Version: GestPay\n"
+        "Report-Msgid-Bugs-To: \n"
+        "POT-Creation-Date: 2013-01-22 16:04+0000\n"
+        "PO-Revision-Date: 2013-01-08 11:26+0000\n"
+        "Last-Translator: \n"
+        "Language-Team: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+        "Language: it_IT\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+        "X-Poedit-SourceCharset: UTF-8\n"
+        "X-Language: it_IT\n"
+        "X-Poedit-Language: Italian\n"
+        "X-Poedit-Country: Italy\n"
+
+#: GestPay.php:95
+#, php-format
+msgid   "The variable %s must be an array in %s:%s"
+msgstr  "La variabile %s deve essere un array in %s:%s"
+
+#: GestPay.php:274
+#, php-format
+msgid   "The PHP function %s failed"
+msgstr  "La funzione PHP %s è fallita"
+
+#: GestPay.php:291
+#, php-format
+msgid   "cURL error %d"
+msgstr  "Errore cURL %d"
+
+#: GestPay.php:294
+msgid   "Generic cURL error"
+msgstr  "Errore cURL generico"
+
+#: GestPay.php:306
+#: GestPay.php:374
+#, php-format
+msgid   "HTTP error: %s"
+msgstr  "Errore HTTP: %s"
+
+#: GestPay.php:325
+#, php-format
+msgid   "Socket error %d"
+msgstr  "Errore socket: %d"
+
+#: GestPay.php:328
+#: GestPay.php:353
+msgid   "Generic socket error"
+msgstr  "Errore socket generico"
+
+#: GestPay.php:379
+msgid   "cURL and socket non available in PHP"
+msgstr  "cURL e socket non disponibili in PHP"
+
+#: GestPay.php:391
+msgid   "Unknown error in response"
+msgstr  "Errore sconosciuto nella risposta"
+
+#: GestPayCurrency.php:172
+msgid   "US dollar"
+msgstr  "Dollaro USA"
+
+#: GestPayCurrency.php:174
+msgid   "GB pound"
+msgstr  "Sterlina inglese"
+
+#: GestPayCurrency.php:176
+msgid   "Swiss franc"
+msgstr  "Franco svizzero"
+
+#: GestPayCurrency.php:178
+msgid   "Danish krone"
+msgstr  "Corona danese"
+
+#: GestPayCurrency.php:180
+msgid   "Norwegian krone"
+msgstr  "Corona norvegese"
+
+#: GestPayCurrency.php:182
+msgid   "Swedish krona"
+msgstr  "Corona svedese"
+
+#: GestPayCurrency.php:184
+msgid   "Canadian dollar"
+msgstr  "Dollaro canadese"
+
+#: GestPayCurrency.php:186
+msgid   "Italian lira"
+msgstr  "Lira italiane"
+
+#: GestPayCurrency.php:188
+msgid   "Japanese Yen"
+msgstr  "Yen giapponese"
+
+#: GestPayCurrency.php:190
+msgid   "Hong Kong dollar"
+msgstr  "Dollaro di Hong Kong"
+
+#: GestPayCurrency.php:192
+msgid   "Brazilian real"
+msgstr  "Real brasiliano"
+
+#: GestPayCurrency.php:194
+msgid   "Euro"
+msgstr  "Euro"
+
+#: GestPayException.php:1171
+msgid   "Transaction successful"
+msgstr  "Transazione correttamente effettuata"
+
+#: GestPayException.php:1173
+msgid   "Invalid shop login"
+msgstr  "Login negozio non valido"
+
+#: GestPayException.php:1175
+msgid   "Currency not valid"
+msgstr  "Valuta non valida"
+
+#: GestPayException.php:1177
+msgid   "Amount not valid"
+msgstr  "Importo non valido"
+
+#: GestPayException.php:1179
+msgid   "Shop transaction ID not valid"
+msgstr  "Identificativo tranzazione negozio non valido"
+
+#: GestPayException.php:1181
+msgid   "Language not valid"
+msgstr  "Lingua non valida."
+
+#: GestPayException.php:1183
+msgid   "Empty response"
+msgstr  "Risposta vuota"
+
+#: GestPayException.php:1185
+msgid   "String to decrypt not valid"
+msgstr  "Stringa da decriptare non valida"
+
+#: GestPayException.php:1187
+msgid   "Payment page loaded successfully"
+msgstr  "Pagina di pagamento caricata correttamente"
+
+#: GestPayException.php:1189
+#: GestPayException.php:1265
+#: GestPayException.php:1267
+#: GestPayException.php:1283
+msgid   "Card is locked"
+msgstr  "Carta bloccata"
+
+#: GestPayException.php:1191
+msgid   "Confirmed amount exceeding the authorized amount"
+msgstr  "Importo conferma superiore ad importo autorizzato"
+
+#: GestPayException.php:1193
+msgid   "Request to transfer a non-existent authorization"
+msgstr  "Richiesta di movimentare una autorizzazione inesistente"
+
+#: GestPayException.php:1195
+msgid   "Pre-authorization expired"
+msgstr  "Preautorizzazione scaduta"
+
+#: GestPayException.php:1197
+msgid   "Invalid currency"
+msgstr  "Divisa non corretta"
+
+#: GestPayException.php:1199
+msgid   "Pre-authorization already notified"
+msgstr  "Preautorizzazione già notificata"
+
+#: GestPayException.php:1201
+#: GestPayException.php:1203
+#: GestPayException.php:1239
+#: GestPayException.php:1305
+#: GestPayException.php:1307
+#: GestPayException.php:1309
+#: GestPayException.php:1311
+#: GestPayException.php:1313
+#: GestPayException.php:1315
+#: GestPayException.php:1317
+#: GestPayException.php:1319
+#: GestPayException.php:1321
+#: GestPayException.php:1323
+#: GestPayException.php:1325
+#: GestPayException.php:1327
+#: GestPayException.php:1329
+#: GestPayException.php:1331
+#: GestPayException.php:1333
+#: GestPayException.php:1335
+#: GestPayException.php:1337
+#: GestPayException.php:1339
+#: GestPayException.php:1633
+msgid   "Authorization denied"
+msgstr  "Autorizzazione negata"
+
+#: GestPayException.php:1205
+msgid   "Transaction aborted by the bank authorization system"
+msgstr  "Transazione interrotta dal sistema autorizzativo della banca"
+
+#: GestPayException.php:1207
+#: GestPayException.php:1279
+#: GestPayException.php:1303
+#: GestPayException.php:1343
+msgid   "Vendor configuration error in bank authorization system"
+msgstr  "Configurazione esercente errata in sistema autorizzativo banca"
+
+#: GestPayException.php:1209
+#: GestPayException.php:1245
+#: GestPayException.php:1583
+#: GestPayException.php:1623
+#: GestPayException.php:1645
+msgid   "Wrong card date"
+msgstr  "Data carta errata"
+
+#: GestPayException.php:1211
+#: GestPayException.php:1285
+#: GestPayException.php:1301
+msgid   "Bank authorization system not available"
+msgstr  "Sistema autorizzativo banca non disponibile"
+
+#: GestPayException.php:1213
+msgid   "Insufficient card cash"
+msgstr  "Disponibilità carta non sufficiente"
+
+#: GestPayException.php:1215
+#: GestPayException.php:1217
+#: GestPayException.php:1547
+#: GestPayException.php:1643
+msgid   "Please call company"
+msgstr  "Chiamare Ente"
+
+#: GestPayException.php:1219
+#: GestPayException.php:1225
+#: GestPayException.php:1227
+#: GestPayException.php:1229
+#: GestPayException.php:1231
+#: GestPayException.php:1247
+#: GestPayException.php:1289
+#: GestPayException.php:1295
+#: GestPayException.php:1529
+#: GestPayException.php:1531
+#: GestPayException.php:1533
+#: GestPayException.php:1535
+#: GestPayException.php:1539
+#: GestPayException.php:1541
+#: GestPayException.php:1543
+#: GestPayException.php:1545
+#: GestPayException.php:1555
+#: GestPayException.php:1559
+#: GestPayException.php:1561
+#: GestPayException.php:1565
+#: GestPayException.php:1569
+#: GestPayException.php:1575
+#: GestPayException.php:1587
+#: GestPayException.php:1589
+#: GestPayException.php:1601
+#: GestPayException.php:1603
+#: GestPayException.php:1605
+#: GestPayException.php:1613
+#: GestPayException.php:1615
+#: GestPayException.php:1619
+msgid   "Technical error"
+msgstr  "Errore tecnico"
+
+#: GestPayException.php:1221
+#: GestPayException.php:1663
+msgid   "Seize card"
+msgstr  "Ritirare carta"
+
+#: GestPayException.php:1223
+#: GestPayException.php:1253
+#: GestPayException.php:1255
+#: GestPayException.php:1277
+#: GestPayException.php:1571
+#: GestPayException.php:1635
+msgid   "Authorization denied from the circuits"
+msgstr  "Autorizzazione negata dai circuiti"
+
+#: GestPayException.php:1233
+#: GestPayException.php:1263
+#: GestPayException.php:1275
+#: GestPayException.php:1639
+msgid   "Unrecognized card"
+msgstr  "Carta non riconosciuta"
+
+#: GestPayException.php:1235
+#: GestPayException.php:1249
+#: GestPayException.php:1291
+#: GestPayException.php:1293
+#: GestPayException.php:1479
+#: GestPayException.php:1537
+#: GestPayException.php:1585
+#: GestPayException.php:1629
+#: GestPayException.php:1631
+msgid   "Technical error while communicating with the international circuits"
+msgstr  "Errore tecnico nel colloquio con i circuiti internazionali"
+
+#: GestPayException.php:1237
+msgid   "Wrong pin"
+msgstr  "Pin errato"
+
+#: GestPayException.php:1241
+#: GestPayException.php:1661
+msgid   "Unavailable network"
+msgstr  "Rete non disponibile"
+
+#: GestPayException.php:1243
+#: GestPayException.php:1581
+#: GestPayException.php:1647
+msgid   "Wrong transaction date"
+msgstr  "Data transazione errata"
+
+#: GestPayException.php:1251
+#: GestPayException.php:1271
+#: GestPayException.php:1641
+msgid   "Expired card"
+msgstr  "Carta scaduta"
+
+#: GestPayException.php:1257
+#: GestPayException.php:1341
+#: GestPayException.php:1625
+#: GestPayException.php:1637
+msgid   "Card not enabled"
+msgstr  "Carta non abilitata"
+
+#: GestPayException.php:1259
+#: GestPayException.php:1287
+#: GestPayException.php:1523
+#: GestPayException.php:1549
+#: GestPayException.php:1551
+#: GestPayException.php:1557
+#: GestPayException.php:1567
+#: GestPayException.php:1573
+#: GestPayException.php:1577
+#: GestPayException.php:1591
+#: GestPayException.php:1593
+#: GestPayException.php:1597
+#: GestPayException.php:1599
+#: GestPayException.php:1607
+#: GestPayException.php:1609
+#: GestPayException.php:1611
+#: GestPayException.php:1617
+#: GestPayException.php:1621
+#: GestPayException.php:1659
+msgid   "Operation not allowed"
+msgstr  "Operazione non permessa"
+
+#: GestPayException.php:1261
+msgid   "Operation not allowed (exceeded pin attempts)"
+msgstr  "Operazione non permessa (Tentativi pin esauriti)"
+
+#: GestPayException.php:1269
+#: GestPayException.php:1281
+#: GestPayException.php:1527
+#: GestPayException.php:1595
+#: GestPayException.php:1627
+#: GestPayException.php:1655
+msgid   "Amount not available"
+msgstr  "Importo non disponibile"
+
+#: GestPayException.php:1273
+#: GestPayException.php:1347
+msgid   "Operation not accomplished"
+msgstr  "Operazione non effettuata"
+
+#: GestPayException.php:1297
+msgid   "Operation abandoned by buyer"
+msgstr  "Operazione abbandonata dal compratore"
+
+#: GestPayException.php:1299
+msgid   "Bank transfer not authorized"
+msgstr  "Bonifico non autorizzato"
+
+#: GestPayException.php:1345
+#: GestPayException.php:1389
+msgid   "Wrong credit card check digit"
+msgstr  "Carta di credito con Check-digit errato"
+
+#: GestPayException.php:1349
+msgid   "Empty parameters string"
+msgstr  "Stringa di parametri vuota"
+
+#: GestPayException.php:1351
+msgid   "Invalid parameter string"
+msgstr  "Formato non valido della stringa di parametri"
+
+#: GestPayException.php:1353
+msgid   "= symbol not preceded by a parameter name"
+msgstr  "Simbolo = non preceduto da nome parametro"
+
+#: GestPayException.php:1355
+msgid   "Parameter string ends with a separator"
+msgstr  "La stringa di parametri termina con un separatore"
+
+#: GestPayException.php:1357
+msgid   "Invalid parameter name"
+msgstr  "Nome parametro non valido"
+
+#: GestPayException.php:1359
+msgid   "Invalid parameter value"
+msgstr  "Valore parametro non valido"
+
+#: GestPayException.php:1361
+msgid   "Duplicated parameter name"
+msgstr  "Nome parametro ripetuto"
+
+#: GestPayException.php:1363
+msgid   "Unexpected parameter name. Please check the fields and parameters configuration in Back Office."
+msgstr  "Nome parametro non previsto. Verificare la configurazione Campi e Parametri nel Back Office."
+
+#: GestPayException.php:1365
+msgid   "Empty mandatory parameter"
+msgstr  "Parametro obbligatorio non valorizzato"
+
+#: GestPayException.php:1367
+msgid   "Missing parameter"
+msgstr  "Parametro mancante"
+
+#: GestPayException.php:1369
+msgid   "Missing PAY1_UICCODE parameter"
+msgstr  "Parametro PAY1_UICCODE non presente"
+
+#: GestPayException.php:1371
+msgid   "Invalid currency code"
+msgstr  "Codice divisa non valido"
+
+#: GestPayException.php:1373
+msgid   "Missing PAY1_AMOUNT parameter"
+msgstr  "Parametro PAY1_AMOUNT non presente"
+
+#: GestPayException.php:1375
+msgid   "Amount not numeric"
+msgstr  "Importo non numerico"
+
+#: GestPayException.php:1377
+msgid   "Wrong number of decimals in amount"
+msgstr  "Importo con numero di decimali errato"
+
+#: GestPayException.php:1379
+msgid   "Missing PAY1_SHOPTRANSACTIONID parameter"
+msgstr  "Parametro PAY1_SHOPTRANSACTIONID non presente"
+
+#: GestPayException.php:1381
+msgid   "PAY1_SHOPTRANSACTIONID parameter too long"
+msgstr  "Parametro PAY1_SHOPTRANSACTIONID troppo lungo"
+
+#: GestPayException.php:1383
+msgid   "Invalid language identifier"
+msgstr  "Identificativo lingua non valido"
+
+#: GestPayException.php:1385
+msgid   "Non-numeric characters in the credit card number"
+msgstr  "Il numero di carta contiene caratteri non numerici"
+
+#: GestPayException.php:1387
+#: GestPayException.php:1525
+msgid   "Wrong length of the credit card number"
+msgstr  "Lunghezza errata del numero di carta di credito"
+
+#: GestPayException.php:1391
+msgid   "Credit card of a disabled company"
+msgstr  "Carta di credito di una compagnia non abilitata"
+
+#: GestPayException.php:1393
+msgid   "Expiration year without month"
+msgstr  "Anno di scadenza senza mese di scadenza"
+
+#: GestPayException.php:1395
+msgid   "Expiration month without year"
+msgstr  "Mese di scadenza senza anno di scadenza"
+
+#: GestPayException.php:1397
+msgid   "Invalid expiration month"
+msgstr  "Mese di scadenza non valido"
+
+#: GestPayException.php:1399
+msgid   "Invalid expiration year"
+msgstr  "Anno di scadenza non valido"
+
+#: GestPayException.php:1401
+msgid   "Expiry date exceeded"
+msgstr  "Data scadenza superata"
+
+#: GestPayException.php:1403
+msgid   "Invalid buyer email"
+msgstr  "Indirizzo email compratore non valido"
+
+#: GestPayException.php:1405
+msgid   "Parameters string too long"
+msgstr  "Stringa di parametri troppo lunga"
+
+#: GestPayException.php:1407
+msgid   "Parameter value too long"
+msgstr  "Il valore assegnato al parametro è troppo lungo"
+
+#: GestPayException.php:1409
+msgid   "Call not accepted: missing A parameter"
+msgstr  "Chiamata non accettata: parametro A mancante"
+
+#: GestPayException.php:1411
+msgid   "Call not accepted: shop not recognized"
+msgstr  "Chiamata non accettata: negozio non riconosciuto"
+
+#: GestPayException.php:1413
+msgid   "Call not accepted: unactive shop"
+msgstr  "Chiamata non accettata: il negozio non è attivo"
+
+#: GestPayException.php:1415
+msgid   "Call not accepted: missing B parameter"
+msgstr  "Chiamata non accettata, manca il parametro B"
+
+#: GestPayException.php:1417
+msgid   "Call not accepted: empty B parameter"
+msgstr  "Chiamata non accettata: parametro B vuoto"
+
+#: GestPayException.php:1419
+msgid   "Call not accepted: other parameters in addition to A and B"
+msgstr  "Chiamata non accettata: presenti altri parametri oltre ad A e B"
+
+#: GestPayException.php:1421
+msgid   "Call not accepted: transaction not started by a call to the server-to-server cryprography system"
+msgstr  "Chiamata non accettata: la transazione non è iniziata con una chiamata al sistema di crittografia server-server"
+
+#: GestPayException.php:1423
+msgid   "Call not accepted: transaction already processed previously"
+msgstr  "Chiamata non accettata: la transazione è già stata processata precedentemente"
+
+#: GestPayException.php:1425
+msgid   "Call not accepted: missing credit card number or expiration"
+msgstr  "Chiamata non accettata: numero carta o scadenza carta mancanti"
+
+#: GestPayException.php:1427
+msgid   "Call not accepted: the shop doesn’t have a public payment page"
+msgstr  "Chiamata non accettata: il negozio non ha una pagina di pagamento pubblica"
+
+#: GestPayException.php:1429
+msgid   "Transaction abandoned by the customer"
+msgstr  "Transazione abbandonata dal cliente"
+
+#: GestPayException.php:1431
+msgid   "Call not accepted: unacceptable parameters string"
+msgstr  "Chiamata non accettata: stringa di parametri non accettabile"
+
+#: GestPayException.php:1433
+msgid   "Call not accepted: invalid IP address"
+msgstr  "Chiamata non accettata: indirizzo IP non valido"
+
+#: GestPayException.php:1435
+msgid   "Transaction abandoned by the buyer"
+msgstr  "Transazione abbandonata dal compratore"
+
+#: GestPayException.php:1437
+msgid   "Empty nandatory field"
+msgstr  "Campo obbligatorio non valorizzato"
+
+#: GestPayException.php:1439
+msgid   "Invalid OTP"
+msgstr  "OTP invalida"
+
+#: GestPayException.php:1441
+msgid   "Amount too low"
+msgstr  "Importo troppo basso"
+
+#: GestPayException.php:1443
+#: GestPayException.php:1563
+#: GestPayException.php:1579
+msgid   "Amount too high"
+msgstr  "Importo troppo alto"
+
+#: GestPayException.php:1445
+msgid   "Invalid buyer name"
+msgstr  "Nome del compratore non valido"
+
+#: GestPayException.php:1447
+msgid   "Missing or wrong CVV2"
+msgstr  "CVV2 mancante o errato"
+
+#: GestPayException.php:1449
+msgid   "IPIN must have a value"
+msgstr  "Valorizzare IPIN"
+
+#: GestPayException.php:1451
+msgid   "Wrong parameters"
+msgstr  "Parametri errati"
+
+#: GestPayException.php:1453
+msgid   "Unable to verify the card qualification for the VBV service"
+msgstr  "Impossibile verificare l’abilitazione della carta al servizio VBV"
+
+#: GestPayException.php:1455
+msgid   "Call not accepted: missing TransKey"
+msgstr  "Chiamata non accettata: TransKey mancante"
+
+#: GestPayException.php:1457
+msgid   "The ABI code does not match any of the banks in the BankPass circuit"
+msgstr  "Codice ABI non corrispondente ad alcuna banca aderente a BankPass"
+
+#: GestPayException.php:1459
+msgid   "BankPass transaction abandoned by the buyer"
+msgstr  "Transazione BankPass abbandonata dal compratore"
+
+#: GestPayException.php:1461
+msgid   "BankPass – Buyer authentication failed"
+msgstr  "BankPass - Fallita autenticazione compratore"
+
+#: GestPayException.php:1463
+msgid   "BankPass – No available payment tool"
+msgstr  "BankPass – Nessuno strumento di pagamento disponibile"
+
+#: GestPayException.php:1465
+msgid   "BankPass – Technical error"
+msgstr  "BankPass - Errore tecnico"
+
+#: GestPayException.php:1467
+msgid   "BankPass Server-Server: return URL not specified"
+msgstr  "BankPass Server-Server: URL di ritorno non valorizzata"
+
+#: GestPayException.php:1469
+msgid   "BankPass Server-Server: return URL too long (max 250 characters)"
+msgstr  "BankPass Server-Server: URL di ritorno troppo lunga (max 250 caratteri)"
+
+#: GestPayException.php:1471
+msgid   "BankPass Server-Server: invalid return URL (must start with http:// or https://)"
+msgstr  "BankPass Server-Server: URL di ritorno non valida (deve iniziare con http:// o https://)"
+
+#: GestPayException.php:1473
+msgid   "BankPass Server-Server: return URL parameter not found"
+msgstr  "BankPass Server-Server: Parametro URL Return non presente"
+
+#: GestPayException.php:1475
+msgid   "BankPass Server-Server: IDBankPass not found"
+msgstr  "BankPass Server-Server: IDBankPass non presente"
+
+#: GestPayException.php:1477
+msgid   "BankPass Server-Server: IDBankPass not valid"
+msgstr  "BankPass Server-Server: IDBankPass non valido"
+
+#: GestPayException.php:1481
+msgid   "Transaction excedees the maximum number of operations in the time interval"
+msgstr  "La transazione eccede il numero massimo di operazioni nell’intervallo di tempo"
+
+#: GestPayException.php:1483
+msgid   "Transaction excedees the maximum number of operations done by the user in the time interval"
+msgstr  "La transazione eccede il numero nassimo di operazioni effettuate dallo stesso utente nell’intervallo di tempo"
+
+#: GestPayException.php:1485
+msgid   "Transaction excedees the maximum amount in the time interval"
+msgstr  "La transazione eccede l’importo massimo nell’intervallo di tempo"
+
+#: GestPayException.php:1487
+msgid   "Transaction excedees the maximum amount for the same user in the time interval"
+msgstr  "La transazione eccede l’importo massimo pagabile dallo stesso utente nell’intervallo di tempo"
+
+#: GestPayException.php:1489
+msgid   "Transaction contains an amount declared as not acceptable"
+msgstr  "La transazione contiene un valore dichiarato come non accettabile"
+
+#: GestPayException.php:1491
+msgid   "Transaction abandoned because it’s a duplicated of a previous transaction"
+msgstr  "La transazione è stata abbandonata in quanto duplicato di una effettuata precedentemente"
+
+#: GestPayException.php:1493
+msgid   "Wrong line length"
+msgstr  "Lunghezza linea errata"
+
+#: GestPayException.php:1495
+msgid   "Invalid SHOPTRANSACTIONID field"
+msgstr  "Campo SHOPTRANSACTIONID non correttamente valorizzato"
+
+#: GestPayException.php:1497
+msgid   "Invalid DIVISA field"
+msgstr  "Campo DIVISA non correttamente valorizzato"
+
+#: GestPayException.php:1499
+msgid   "Invalid IMPORTO field"
+msgstr  "Campo IMPORTO non correttamente valorizzato"
+
+#: GestPayException.php:1501
+msgid   "Empty DATA AUTORIZZAZIONE field"
+msgstr  "Campo DATA AUTORIZZAZIONE non correttamente valorizzato"
+
+#: GestPayException.php:1503
+msgid   "Transaction does not exist"
+msgstr  "Transazione non esistente"
+
+#: GestPayException.php:1505
+msgid   "Transaction is not unique"
+msgstr  "Transazione non univoca"
+
+#: GestPayException.php:1507
+msgid   "More than one line for the same transaction in the file"
+msgstr  "Il file contiene più di una riga relativa alla stessa transazione"
+
+#: GestPayException.php:1509
+msgid   "You have requested a transfer for an amount in excess of the remaining availability of the transaction"
+msgstr  "Avete richiesto uno storno per un importo eccedente la disponibilità residua della transazione"
+
+#: GestPayException.php:1511
+msgid   "Invalid BANKTRANSACTIONID field"
+msgstr  "Campo BANKTRANSACTIONID non correttamente valorizzato"
+
+#: GestPayException.php:1513
+msgid   "Empty BANKTRANSACTIONID and SHOPTRANSACTIONID fields"
+msgstr  "Campi BANKTRANSACTIONID e SHOPTRANSACTIONID non valorizzati"
+
+#: GestPayException.php:1515
+msgid   "Transaction can not be deleted"
+msgstr  "Transazione non cancellabile"
+
+#: GestPayException.php:1517
+msgid   "Transaction can’t be diverted"
+msgstr  "Transazione non stornabile"
+
+#: GestPayException.php:1519
+msgid   "Transaction can’t be transferred"
+msgstr  "Transazione non movimentabile"
+
+#: GestPayException.php:1521
+msgid   "Transaction not voidable"
+msgstr  "Transazione non annullabile"
+
+#: GestPayException.php:1553
+msgid   "Wrong credit card check digit. Please check the number of the credit cart."
+msgstr  "Carta di credito con Check-digit errato. Verificare il numero di carta inserito."
+
+#: GestPayException.php:1649
+msgid   "System error"
+msgstr  "Errore di sistema"
+
+#: GestPayException.php:1651
+msgid   "Unrecognized vendor"
+msgstr  "Esercente non riconosciuto"
+
+#: GestPayException.php:1653
+msgid   "Invalid format"
+msgstr  "Formato invalido"
+
+#: GestPayException.php:1657
+msgid   "Not transferred"
+msgstr  "Non movimentata"
+
+#: GestPayException.php:1665
+msgid   "Pin attempts exceeded"
+msgstr  "Tentativi PIN esauriti"
+
+#: GestPayException.php:1667
+msgid   "Locked terminal"
+msgstr  "Terminale bloccato"
+
+#: GestPayException.php:1669
+msgid   "Terminal forcibly closed"
+msgstr  "Terminale chiuso forzatamente"
+
+#: GestPayException.php:1671
+msgid   "Transaction not allowed"
+msgstr  "Transazione non permessa"
+
+#: GestPayException.php:1673
+msgid   "Transaction not authorized"
+msgstr  "Transazione non autorizzata"
+
+#: GestPayException.php:1675
+msgid   "Service not available on 01/01/2002."
+msgstr  "Servizio sospeso il 01/01/2002."
+
+#: GestPayException.php:1677
+#: GestPayException.php:1679
+msgid   "Authorization not granted"
+msgstr  "Autorizzazione non concessa"
+
+#: GestPayException.php:1681
+#: GestPayException.php:1717
+msgid   "Flow correctly processed"
+msgstr  "Flusso elaborato correttamente"
+
+#: GestPayException.php:1683
+msgid   "Header/footer record not found"
+msgstr  "Record di testa/coda non presente"
+
+#: GestPayException.php:1685
+msgid   "Empty vendor code"
+msgstr  "Cod.esercente non valorizzato"
+
+#: GestPayException.php:1687
+msgid   "Incongruent number of rows"
+msgstr  "Numero righe incongruente"
+
+#: GestPayException.php:1689
+msgid   "Wrong file format"
+msgstr  "File con formato errato"
+
+#: GestPayException.php:1691
+msgid   "Vendor not enabled to the function"
+msgstr  "Esercente non abilitato alla funzione"
+
+#: GestPayException.php:1693
+msgid   "Verify By Visa"
+msgstr  "Verify By Visa"
+
+#: GestPayException.php:1695
+msgid   "Unavailable function for VISA cards"
+msgstr  "Funzione non disponibile per carte VISA"
+
+#: GestPayException.php:1697
+msgid   "Unavailable function"
+msgstr  "Funzione non disponibile"
+
+#: GestPayException.php:1699
+msgid   "Payment aborted"
+msgstr  "Pagamento interrotto"
+
+#: GestPayException.php:1701
+msgid   "Wrong credit card number for this operation"
+msgstr  "Numero carta di credito errato per questa operazione"
+
+#: GestPayException.php:1703
+msgid   "Operation successfully acquired"
+msgstr  "Operazione acquisita correttamente"
+
+#: GestPayException.php:1705
+msgid   "Authorization not found"
+msgstr  "Autorizzazione non trovata"
+
+#: GestPayException.php:1707
+msgid   "Movement not found"
+msgstr  "Movimentazione non trovata"
+
+#: GestPayException.php:1709
+msgid   "Movement amount greater that authorized amount"
+msgstr  "Imòporto movimento maggiore dell’importo autorizzato"
+
+#: GestPayException.php:1711
+msgid   "Transfer amount greather than the balance"
+msgstr  "Importo storno maggiore del saldo"
+
+#: GestPayException.php:1713
+msgid   "Operation not transferred"
+msgstr  "Operazione non movimentata"
+
+#: GestPayException.php:1715
+msgid   "Flow waiting to be processed"
+msgstr  "Flusso in attesa di elaborazione"
+
+#: GestPayException.php:1719
+msgid   "Unavailable function for MASTERCARD cards"
+msgstr  "Funzione non disponibile per carte MASTERCARD"
+
+#: GestPayException.php:1721
+msgid   "Unavailable function for JBC cards"
+msgstr  "Funzione non disponibile per carte JCB"
+
+#: GestPayException.php:1723
+msgid   "Unavailable function for MAESTRO cards"
+msgstr  "Funzione non disponibile per carte MAESTRO"
+
+#: GestPayException.php:1725
+msgid   "UP Mobile Payment"
+msgstr  "UP Mobile Payment"
+
+#: GestPayException.php:1727
+msgid   "Unsupported browser"
+msgstr  "Browser non supportato"
+
+#: GestPayException.php:1729
+msgid   "Error during iFrame creation"
+msgstr  "Errore nella creazione dell’iFrame"
+
+#: GestPayException.php:1731
+msgid   "Step with errors"
+msgstr  "Fase con errori"
+
+#: GestPayException.php:1733
+msgid   "Step successful"
+msgstr  "Fase correttamente eseguita"
+
+#: GestPayException.php:1735
+msgid   "Generic error"
+msgstr  "Errore generico"
+
+#: GestPayException.php:1738
+#, php-format
+msgid   "Unknown error (%s)"
+msgstr  "Errore sconosciuto (%s)"
+
+#: GestPayLanguage.php:84
+msgid   "Italian"
+msgstr  "Italiano"
+
+#: GestPayLanguage.php:86
+msgid   "English"
+msgstr  "Inglese"
+
+#: GestPayLanguage.php:88
+msgid   "Spanish"
+msgstr  "Spagnolo"
+
+#: GestPayLanguage.php:90
+msgid   "French"
+msgstr  "Francese"
+
+#: GestPayLanguage.php:92
+msgid   "German"
+msgstr  "Tedesco"
