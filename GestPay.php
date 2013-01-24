@@ -48,7 +48,7 @@ class GestPay {
 	* @param string $value The shop login
 	*/
 	public function setShopLogin($value) {
-		$this->_shopLogin = is_string($value) ? $value : '';
+		$this->_shopLogin = is_string($value) ? trim($value) : '';
 	}
 	/** Gets the shop login.
 	* @return string
@@ -82,14 +82,17 @@ class GestPay {
 	}
 	/** Encodes the specified data.
 	* @param array $data An array with these values:<ul>
-	*	<li>int <b>currency</b> [required] One of the GestPayCurrency:: constants.
-	*	<li>float <b>amount</b> [required] The transaction amount.
-	*	<li>string <b>transactionID</b> [required] An identifier attributed to the transaction by the merchant.</li>
-	*	<li>string <b>cvv</b> [optional] The value of CVV2 / CVc2 / 4DBC code of credit card.
-	*	<li>string <b>buyerName</b> [optional] Buyer's name.
-	*	<li>string <b>buyerEmail</b> [optional] Buyer's email address.
-	*	<li>string <b>language</b> [optional] The language id.
-	*	<li>string <b>customInfo</b> [optional] Custom information.
+	*	<li>int <b>currency</b> [required] The currency id [one of the GestPayCurrency:: constants].</li>
+	*	<li>float <b>amount</b> [required] The transaction amount [from 0.01 to 9,999,999.99].</li>
+	*	<li>string <b>transactionID</b> [required] An identifier attributed to the transaction by the merchant [maximum length: 50 characters].</li>
+	*	<li>int <b>language</b> [optional] The language [one of the GestPayLanguage:: constants].</li>
+	*	<li>string <b>buyerName</b> [optional] Buyer's name [maximum length: 50 characters].</li>
+	*	<li>string <b>buyerEmail</b> [optional] Buyer's email address [maximum length: 50 characters].</li>
+	*	<li>string <b>cardNumber</b> [optional] Buyer's credit card number [maximum length: 20 characters].</li>
+	*	<li>int <b>expMonth</b> [optional] Buyer's credit card expiration month [1... 12].</li>
+	*	<li>int <b>expYear</b> [optional] Buyer's credit card expiration year [0... 99 or 2000... 2099].</li>
+	*	<li>string <b>cvv</b> [optional] The value of CVV2 / CVc2 / 4DBC code of credit card [3 or 4 characters].</li>
+	*	<li>string <b>customInfo</b> [optional] Custom information [maximum length: 1000 characters].</li>
 	* </ul>
 	* @throws GestPayException Throws a GestPayException in case of errors.
 	*/
@@ -100,38 +103,84 @@ class GestPay {
 		if(!is_array($data)) {
 			throw GestPayException::generic(sprintf(t('The variable %s must be an array in %s:%s'), '$data', __CLASS__, __FUNCTION__));
 		}
+		foreach(array_keys($data) as $key) {
+			$value = $data[$key];
+			if(is_string($value)) {
+				$data[$key] = $value = trim($value);
+				if(!strlen($value)) {
+					unset($data[$key]);
+				}
+			}
+			elseif(!(is_int($value) || is_float($value))) {
+				unset($data[$key]);
+			}
+		}
 		if((!array_key_exists('currency', $data)) || (!GestPayCurrency::IsValid($data['currency'], true))) {
 			throw GestPayException::fromCode(GestPayException::CURRENCY_NOT_VALID);
 		}
 		if((!array_key_exists('amount', $data)) || (!is_numeric($data['amount'])) || (($data['amount'] = @floatval($data['amount'])) <= 0.0)) {
 			throw GestPayException::fromCode(GestPayException::AMOUNT_NOT_VALID);
 		}
-		if((!array_key_exists('transactionID', $data)) || (!strlen($data['transactionID'] = @strval($data['transactionID'])))) {
+		if((!array_key_exists('transactionID', $data)) || (!strlen($strval($data['transactionID'])))) {
 			throw GestPayException::fromCode(GestPayException::INVALID_TRANSACTIONID);
 		}
-		if(array_key_exists('language', $data) && (!is_null($data['language'])) && ($data['language'] !== '')) {
-			if(!GestPayLanguage::IsValid($data['language'])) {
-				throw GestPayException::fromCode(GestPayException::LANGUAGE_NOT_VALID);
+		if(array_key_exists('language', $data) && (!GestPayLanguage::IsValid($data['language']))) {
+			throw GestPayException::fromCode(GestPayException::LANGUAGE_NOT_VALID);
+		}
+		if(array_key_exists('expMonth', $data)) {
+			if(!is_numeric($data['expMonth'])) {
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_MONTH);
+			}
+			$data['expMonth'] = @intval($data['expMonth']);
+			if(($data['expMonth'] < 1) || ($data['expMonth'] > 12)) {
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_MONTH);
+			}
+		}
+		if(array_key_exists('expYear', $data)) {
+			if(!is_numeric($data['expYear'])) {
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_YEAR);
+			}
+			$data['expYear'] = @intval($data['expYear']);
+			if(($data['expYear'] >= 2000) && ($data['expYear'] < 2100)) {
+				$data['expYear'] -= 2000;
+			}
+			if(($data['expYear'] < 0) || ($data['expYear'] > 99)) {
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_YEAR);
 			}
 		}
 		$fields = array();
-		foreach(array('cvv' => 'PAY1_CVV', 'currency' => 'PAY1_UICCODE', 'amount' => 'PAY1_AMOUNT', 'transactionID' => 'PAY1_SHOPTRANSACTIONID', 'buyerName' => 'PAY1_CHNAME', 'buyerEmail' => 'PAY1_CHEMAIL', 'language' => 'PAY1_IDLANGUAGE') as $dataKey => $outKey) {
+		$tags = array(
+			'currency' => 'PAY1_UICCODE',
+			'amount' => 'PAY1_AMOUNT',
+			'transactionID' => 'PAY1_SHOPTRANSACTIONID',
+			'language' => 'PAY1_IDLANGUAGE',
+			'buyerName' => 'PAY1_CHNAME',
+			'buyerEmail' => 'PAY1_CHEMAIL',
+			'cardNumber' => 'PAY1_CARDNUMBER',
+			'expMonth' => 'PAY1_EXPMONTH',
+			'expYear' => 'PAY1_EXPYEAR',
+			'cvv' => 'PAY1_CVV'
+		);
+		foreach($tags as $dataKey => $outKey) {
 			if(array_key_exists($dataKey, $data)) {
-				self::addEncrypt($fields, $outKey, $data[$dataKey]);
-				unset($data[$dataKey]);
+				$value = strval($data[$dataKey]);
+				$fields[] = "$outKey=" . self::encodeFieldValue($value);
 			}
 		}
 		if(array_key_exists('customInfo', $data)) {
 			$value = $data['customInfo'];
-			self::addEncrypt($fields, '', $data['customInfo']);
-			unset($data['customInfo']);
+			while(strlen($value) > 300) {
+				$fields[] = self::encodeFieldValue(substr($value, 0, 300));
+				$value = substr($value, 300);
+			}
+			$fields[] = self::encodeFieldValue($value);
 		}
 		$url = $this->getRootURL();
 		$url .= $this->getUseSSL() ? '/CryptHTTPS/Encrypt.asp' : '/CryptHTTP/Encrypt.asp';
 		$url .= '?a=' . urlencode($this->getShopLogin());
 		$url .= '&b=' . implode(self::ENCRYPT_SEPARATOR, $fields);
 		$url .= '&c=' . urlencode(self::VERSION);
-		$response = $this->ExecWeb($url);
+		$response = self::callRemote($url);
 		$encrypted = '';
 		if(preg_match('%#cryptstring#(.*)#/cryptstring#%s', $response, $m)) {
 			$encrypted = trim($m[1]);
@@ -139,25 +188,6 @@ class GestPay {
 		if(!strlen($encrypted)) {
 			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE);
 		}
-	}
-	/** Adds a field to the values to be enctypted.
-	* @param array $fields [in/out] The fields array to be updated.
-	* @param string $key The field name (empty string for customInfo).
-	* @param mixed $value The value to be added.
-	*/
-	private static function addEncrypt(&$fields, $key, $value) {
-		if((is_string($value) && strlen($value)) || is_int($value) || is_float($value)) {
-			$value = strval($value);
-			//$value = preg_replace('/[ \t]+/', '§', $value);
-			$fields[] = (strlen($key) ? "$key=" : '') . urlencode($value);
-		}
-	}
-	/** Returns the url for payments.
-	* @param string $encryptedString Encrypted string built with GestPay->encrypt().
-	* @return string
-	*/
-	public function getPaymentURL($encryptedString) {
-		return $this->getRootURL() . '/gestpay/pagam.asp?a=' . urlencode($this->getShopLogin()) . '&b=' . $encryptedString;
 	}
 	/** Decrypt an encrypted string.
 	* @param string $cryptedString
@@ -167,7 +197,7 @@ class GestPay {
 	*	<li>string <b>transactionID</b> The identifier attributed to the transaction by the merchant.</li>
 	*	<li>string <b>buyerName</b> Buyer's name and surname.</li>
 	*	<li>string <b>buyerEmail</b> Buyer's email address.</li>
-	*	<li>string <b>transactionResult</b> Transaction result.</li>
+	*	<li>bool|null <b>transactionResult</b> Transaction result (true: transaction was ok; false: transaction failed; null: transaction suspended, for example for a bank transfer).</li>
 	*	<li>string <b>authorizationCode</b> Transaction authorisation code.</li>
 	*	<li>string <b>bankTransactionID</b> Identifier attributed to the transaction by GestPay.</li>
 	*	<li>string <b>country</b> Nationality of institute issuing card.</li>
@@ -180,7 +210,8 @@ class GestPay {
 	*	<li>int <b>expMonth</b> Credit card expiration month.</li>
 	*	<li>int <b>expYear</b> Credit card expiration year.</li>
 	*	<li>int <b>language</b> Language ID (should be one of the GestPayLanguage:: constants).</li>
-	*	<li><b>3dLevel</b> Level of authentication for VBV Visa/Mastercard Securecode transactions (should be FULL or HALF).</li>
+	*	<li>string <b>3dLevel</b> Level of authentication for VBV Visa/Mastercard Securecode transactions (should be FULL or HALF).</li>
+	*	<li>string <b>otp</b> One time password.</li>
 	* </ul>
 	* @throws GestPayException Throws a GestPayException in case of errors.
 	*/
@@ -196,7 +227,7 @@ class GestPay {
 		$url .= '?a=' . urlencode($this->getShopLogin());
 		$url .= '&b=' . urlencode($cryptedString);
 		$url .= '&c=' . urlencode(self::VERSION);
-		$response = $this->ExecWeb($url);
+		$response = self::callRemote($url);
 		$decryptedString = '';
 		if($decrypted('%#decryptstring#(.*)#/decryptstring#%s', $response, $m)) {
 			$encrypted = trim($m[1]);
@@ -225,14 +256,16 @@ class GestPay {
 			'PAY1_EXPYEAR' => 'expYear',
 			'PAY1_VBVRISP' => 'vbvRisp',
 			'PAY1_IDLANGUAGE' => 'language',
-			'PAY1_3DLEVEL' => '3dLevel'
+			'PAY1_3DLEVEL' => '3dLevel',
+			'PAY1_OTP' => 'otp'
 		);
 		foreach(explode(self::SEPARATOR, $dectypted) as $chunk) {
 			$outSet = false;
 			foreach($tags as $tagIn => $tagOut) {
-				$s = $tagIn . '=';
-				if(stripos($chunk, $s) === 0) {
-					$dectypted[$tagOut] = (strlen($chunk) == strlen($s)) ? '' : substr($chunk, 1 + strlen($s));
+				$chunkStart = $tagIn . '=';
+				if(stripos($chunk, $chunkStart) === 0) {
+					$catched = true;
+					$dectypted[$tagOut] = (strlen($chunk) == strlen($chunkStart)) ? '' : self::decodeFieldValue(substr($chunk, 1 + strlen($chunkStart)));
 					switch($tagOut) {
 						case 'currency':
 							GestPayCurrency::IsValid($dectypted[$tagOut], true);
@@ -261,14 +294,27 @@ class GestPay {
 								$dectypted[$tagOut] = false;
 							}
 							break;
-					}
-					$outSet = true;
+						case 'transactionResult':
+							if($dectypted[$tagOut] === 'OK') {
+								$dectypted[$tagOut] = true;
+							}
+							elseif($dectypted[$tagOut] === 'KO') {
+								$dectypted[$tagOut] = false;
+							}
+							elseif($dectypted[$tagOut] === 'XX') {
+								$dectypted[$tagOut] = null;
+							}
+							break;
+						}
 					break;
 				}
 			}
-			if(!$outSet) {
+			if(!$catched) {
 				if(strlen(trim($chunk))) {
-					$dectypted['customInfo'] = (isset($dectypted['customInfo']) ? "\n" : '') . trim($chunk);
+					if(!isset($dectypted['customInfo'])) {
+						$dectypted['customInfo'] = '';
+					}
+					$dectypted['customInfo'] .= self::decodeFieldValue($chunk);
 				}
 			}
 		}
@@ -277,7 +323,33 @@ class GestPay {
 		}
 		return $decrypted;
 	}
-	private function ExecWeb($url)
+	/** Encodes the value of a field for the encrypt function.
+	* @param string $value The value to be fixed.
+	* @param return string
+	*/
+	private static function encodeFieldValue($value) {
+		return urlencode($value);
+	}
+	/** Decodes a value a field for the decrypt function.
+	* @param string $value The value to be fixed.
+	* @param return string
+	*/
+	private static function decodeFieldValue($value) {
+		return urldecode($value);
+	}
+	/** Returns the url for payments.
+	* @param string $encryptedString Encrypted string built with GestPay->encrypt().
+	* @return string
+	*/
+	public function getPaymentURL($encryptedString) {
+		return $this->getRootURL() . '/gestpay/pagam.asp?a=' . urlencode($this->getShopLogin()) . '&b=' . $encryptedString;
+	}
+	/** Call remote server and returns the response.
+	* @param string $url The url to call.
+	* @return string
+	* @throws Exception Throws an Exception in case of communication errors or if there's an error signaled by the remote server.
+	*/
+	private static function callRemote($url)
 	{
 		if(function_exists('curl_init')) {
 			$hCurl = @curl_init($url);
@@ -404,4 +476,3 @@ class GestPay {
 		return $response;
 	}
 }
-
