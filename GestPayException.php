@@ -9,24 +9,24 @@ class GestPayException extends Exception {
 	*/
 	const TRANSACTION_SUCCESSFUL = 0;
 	/** Invalid shop login.
-	 * @var int
-	 */
+	* @var int
+	*/
 	const INVALID_SHOPLOGIN = -546;
 	/** Currency not valid.
-	 * @var int
-	 */
+	* @var int
+	*/
 	const CURRENCY_NOT_VALID = -552;
 	/** Amount not valid.
-	 * @var int
-	 */
+	* @var int
+	*/
 	const AMOUNT_NOT_VALID = -553;
 	/** Shop Transaction ID not valid.
-	 * @var int
-	 */
+	* @var int
+	*/
 	const INVALID_TRANSACTIONID = -554;
 	/** Language not valid..
-	 * @var int
-	 */
+	* @var int
+	*/
 	const LANGUAGE_NOT_VALID = -555;
 	/** Empty response.
 	* @var int
@@ -261,8 +261,8 @@ class GestPayException extends Exception {
 	*/
 	const OPERATION_ABANDONED_BY_BUYER = 516;
 	/** Bank transfer not authorized.
-	 * @var int
-	 */
+	* @var int
+	*/
 	const BANK_TRANSFER_NOT_AUTHORIZED = 551;
 	/** Bank authorization system not available.
 	* @var int
