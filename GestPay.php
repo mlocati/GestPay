@@ -201,6 +201,7 @@ class GestPay {
 		if(!strlen($encrypted)) {
 			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE, __FILE__, __LINE__);
 		}
+		return $encrypted;
 	}
 	/** Decrypt an encrypted string.
 	* @param string $cryptedString
