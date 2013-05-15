@@ -98,10 +98,10 @@ class GestPay {
 	*/
 	public function encrypt($data) {
 		if(!strlen($this->getShopLogin())) {
-			throw GestPayException::fromCode(GestPayException::INVALID_SHOPLOGIN);
+			throw GestPayException::fromCode(GestPayException::INVALID_SHOPLOGIN, __FILE__, __LINE__);
 		}
 		if(!is_array($data)) {
-			throw GestPayException::generic(sprintf(t('The variable %s must be an array in %s:%s'), '$data', __CLASS__, __FUNCTION__));
+			throw GestPayException::generic(sprintf(t('The variable %s must be an array in %s:%s'), '$data', __CLASS__, __FUNCTION__), __FILE__, __LINE__);
 		}
 		foreach(array_keys($data) as $key) {
 			$value = $data[$key];
@@ -116,36 +116,36 @@ class GestPay {
 			}
 		}
 		if((!array_key_exists('currency', $data)) || (!GestPayCurrency::IsValid($data['currency'], true))) {
-			throw GestPayException::fromCode(GestPayException::CURRENCY_NOT_VALID);
+			throw GestPayException::fromCode(GestPayException::CURRENCY_NOT_VALID, __FILE__, __LINE__);
 		}
 		if((!array_key_exists('amount', $data)) || (!is_numeric($data['amount'])) || (($data['amount'] = @floatval($data['amount'])) <= 0.0)) {
-			throw GestPayException::fromCode(GestPayException::AMOUNT_NOT_VALID);
+			throw GestPayException::fromCode(GestPayException::AMOUNT_NOT_VALID, __FILE__, __LINE__);
 		}
 		if((!array_key_exists('transactionID', $data)) || (!strlen(@strval($data['transactionID'])))) {
-			throw GestPayException::fromCode(GestPayException::INVALID_TRANSACTIONID);
+			throw GestPayException::fromCode(GestPayException::INVALID_TRANSACTIONID, __FILE__, __LINE__);
 		}
 		if(array_key_exists('language', $data) && (!GestPayLanguage::IsValid($data['language']))) {
-			throw GestPayException::fromCode(GestPayException::LANGUAGE_NOT_VALID);
+			throw GestPayException::fromCode(GestPayException::LANGUAGE_NOT_VALID, __FILE__, __LINE__);
 		}
 		if(array_key_exists('expMonth', $data)) {
 			if(!is_numeric($data['expMonth'])) {
-				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_MONTH);
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_MONTH, __FILE__, __LINE__);
 			}
 			$data['expMonth'] = @intval($data['expMonth']);
 			if(($data['expMonth'] < 1) || ($data['expMonth'] > 12)) {
-				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_MONTH);
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_MONTH, __FILE__, __LINE__);
 			}
 		}
 		if(array_key_exists('expYear', $data)) {
 			if(!is_numeric($data['expYear'])) {
-				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_YEAR);
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_YEAR, __FILE__, __LINE__);
 			}
 			$data['expYear'] = @intval($data['expYear']);
 			if(($data['expYear'] >= 2000) && ($data['expYear'] < 2100)) {
 				$data['expYear'] -= 2000;
 			}
 			if(($data['expYear'] < 0) || ($data['expYear'] > 99)) {
-				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_YEAR);
+				throw GestPayException::fromCode(GestPayException::INVALID_EXPIRATION_YEAR, __FILE__, __LINE__);
 			}
 		}
 		$fields = array();
@@ -186,7 +186,7 @@ class GestPay {
 			$encrypted = trim($m[1]);
 		}
 		if(!strlen($encrypted)) {
-			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE);
+			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE, __FILE__, __LINE__);
 		}
 	}
 	/** Decrypt an encrypted string.
@@ -217,10 +217,10 @@ class GestPay {
 	*/
 	public function decrypt($cryptedString) {
 		if(!(is_string($cryptedString) && strlen($cryptedString))) {
-			throw GestPayException::fromCode(GestPayException::INVALID_DECRYPT_STRING);
+			throw GestPayException::fromCode(GestPayException::INVALID_DECRYPT_STRING, __FILE__, __LINE__);
 		}
 		if(!strlen($this->getShopLogin())) {
-			throw GestPayException::fromCode(GestPayException::INVALID_SHOPLOGIN);
+			throw GestPayException::fromCode(GestPayException::INVALID_SHOPLOGIN, __FILE__, __LINE__);
 		}
 		$url = $this->getRootURL();
 		$url .= $this->getUseSSL() ? '/CryptHTTPS/Decrypt.asp' : '/CryptHTTP/Decrypt.asp';
@@ -233,7 +233,7 @@ class GestPay {
 			$encrypted = trim($m[1]);
 		}
 		if(!strlen($decryptedString)) {
-			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE);
+			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE, __FILE__, __LINE__);
 		}
 		$dectypted = array();
 		$tags = array(
@@ -319,7 +319,7 @@ class GestPay {
 			}
 		}
 		if(empty($dectypted)) {
-			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE);
+			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE, __FILE__, __LINE__);
 		}
 		return $decrypted;
 	}
@@ -354,7 +354,7 @@ class GestPay {
 		if(function_exists('curl_init')) {
 			$hCurl = @curl_init($url);
 			if(!$hCurl) {
-				throw GestPayException::generic(sprintf(t('The PHP function %s failed'), 'curl'));
+				throw GestPayException::generic(sprintf(t('The PHP function %s failed'), 'curl'), __FILE__, __LINE__);
 			}
 			try {
 				$ok = true;
@@ -377,7 +377,7 @@ class GestPay {
 							$msg = t('Generic cURL error');
 						}
 					}
-					throw GestPayException::generic($msg);
+					throw GestPayException::generic($msg, __FILE__, __LINE__);
 				}
 			}
 			catch(Exception $x) {
@@ -411,7 +411,7 @@ class GestPay {
 								$errMessage = t('Generic socket error');
 							}
 						}
-						throw GestPayException::generic($errMessage);
+						throw GestPayException::generic($errMessage, __FILE__, __LINE__);
 					}
 					try {
 						$ok = true;
@@ -433,7 +433,7 @@ class GestPay {
 					}
 					@fclose($hSocket);
 					if(!$ok) {
-						throw GestPayException::generic(t('Generic socket error'));
+						throw GestPayException::generic(t('Generic socket error'), __FILE__, __LINE__);
 					}
 					$response = str_replace(array("\r\n", "\r"), "\n", $response);
 					$p = strpos($response, "\n\n");
@@ -459,7 +459,7 @@ class GestPay {
 				}
 			}
 			if(!$useSocket) {
-				throw GestPayException::generic(t('cURL and socket non available in PHP'));
+				throw GestPayException::generic(t('cURL and socket non available in PHP'), __FILE__, __LINE__);
 			}
 		}
 		if(preg_match('|#error#(.*)#/error#|s', $response, $m)) {
@@ -468,10 +468,10 @@ class GestPay {
 				$errorCode = @intval($m[1]);
 				if($errorCode != 0) {
 					$errorMessage = (count($m) > 2) ? trim($m[2]) : '';
-					throw GestPayException::fromCode($errorCode, strlen($errorMessage) ? $errorMessage : true);
+					throw GestPayException::fromCode($errorCode, __FILE__, __LINE__, strlen($errorMessage) ? $errorMessage : true);
 				}
 			}
-			throw GestPayException::generic(strlen($error) ? $error : t('Unknown error in response'));
+			throw GestPayException::generic(strlen($error) ? $error : t('Unknown error in response'), __FILE__, __LINE__);
 		}
 		return $response;
 	}

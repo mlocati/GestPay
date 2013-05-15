@@ -1136,27 +1136,36 @@ class GestPayException extends Exception {
 	* @var int
 	*/
 	const GENERIC_ERROR = 9999;
-
 	/** Initializes the instance.
 	* @param string $message The error message.
 	* @param int $code One of the GestPayException:: error codes.
 	*/
-	public function __construct($message, $code) {
+	public function __construct($message, $code, $file = '', $line = null) {
 		parent::__construct($message, $code);
+		$file = (is_string($file) && strlen($file)) ? $file : '';
+		$line = ((!empty($line)) && is_numeric($line)) ? @intval($line) : null;
+		if(strlen($file)) {
+			$this->file = $file;
+			$this->line = is_null($line) ? 0 : $line;
+		}
 	}
 	/** Creates a new instance of GestPayException from one of the GestPayException:: error codes.
 	* @param int $code One of the GestPayException:: error codes.
-	* @param string|true $onNotFoundErrorCode What to use as message if the $code is unknown (use true to build automatically the error message).
+	* @param string $file [default: ''] The full-path file name raising the error.
+	* @param int|null $line [default: null] The line number raising the error.
+	* @param string|true $onNotFoundErrorCode [default: true] What to use as message if the $code is unknown (use true to build automatically the error message).
 	* @return GestPayException
 	*/
-	public static function fromCode($code, $onNotFound = true) {
-		return new GestPayException(self::getErrorDescription($code, $onNotFound), $code);
+	public static function fromCode($code, $file = '', $line = null, $onNotFound = true) {
+		return new GestPayException(self::getErrorDescription($code, $onNotFound), $code, $file, $line);
 	}
 	/** Creates an instance of GestPayException for a generic error.
 	* @param string $message The error message.
+	* @param string $file [default: ''] The full-path file name raising the error.
+	* @param int|null $line [default: null] The line number raising the error.
 	* @return GestPayException
 	*/
-	public static function generic($message) {
+	public static function generic($message, $file = '', $line = null) {
 		return new GestPayException($message, self::GENERIC_ERROR);
 	}
 	/** Returns the description of an error code.
