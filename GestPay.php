@@ -11,7 +11,7 @@ class GestPay {
 	/** Parameters separator in request/response to/from remote server.
 	* @var string
 	*/
-	const ENCRYPT_SEPARATOR = '*P1*';
+	const SEPARATOR = '*P1*';
 	/** Communication-level version in request/response to/from remote server.
 	* @var string
 	*/
@@ -178,7 +178,7 @@ class GestPay {
 		$url = $this->getRootURL();
 		$url .= $this->getUseSSL() ? '/CryptHTTPS/Encrypt.asp' : '/CryptHTTP/Encrypt.asp';
 		$url .= '?a=' . urlencode($this->getShopLogin());
-		$url .= '&b=' . implode(self::ENCRYPT_SEPARATOR, $fields);
+		$url .= '&b=' . implode(self::SEPARATOR, $fields);
 		$url .= '&c=' . urlencode(self::VERSION);
 		$response = self::callRemote($url);
 		$encrypted = '';
