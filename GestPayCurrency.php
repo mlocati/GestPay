@@ -226,4 +226,39 @@ class GestPayCurrency {
 		}
 		return '';
 	}
+	/** Returns the symbol of a currency.
+	* @param int $currency One of the GestPayCurrency::... constants
+	* @return string Returns an empty string if $currency is not valid.
+	*/
+	public static function getSymbol($currency) {
+		if(is_numeric($currency)) {
+			switch(@intval($currency)) {
+				case self::USD:
+					return '$';
+				case self::GBP:
+					return t('£');
+				case self::CHF:
+					return t('Fr');
+				case self::DKK:
+					return t('kr');
+				case self::NOK:
+					return t('kr');
+				case self::SEK:
+					return t('kr');
+				case self::CAD:
+					return t('$');
+				case self::ITL:
+					return t('₤');
+				case self::JPY:
+					return t('¥');
+				case self::HKD:
+					return t('HK$');
+				case self::BRL:
+					return t('R$');
+				case self::EUR:
+					return t('€');
+			}
+		}
+		return '';
+	}
 }
