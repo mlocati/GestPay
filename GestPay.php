@@ -488,4 +488,19 @@ class GestPay {
 		}
 		return $response;
 	}
+	/** Reads the currently received parameters from the current page.
+	* @return array|null Returns null if no parameters available, an array otherwise.
+	*/
+	public static function readParams() {
+		$params = array(
+			'a' => (isset($_GET['a']) && is_string($_GET['a'])) ? $_GET['a'] : null,
+			'b' => (isset($_GET['b']) && is_string($_GET['b'])) ? $_GET['b'] : null
+		);
+		if(is_null($params['a']) || is_null($params['b'])) {
+			return null;
+		}
+		else {
+			return $params;
+		}
+	}
 }
