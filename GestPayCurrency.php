@@ -126,6 +126,21 @@ class GestPayCurrency {
 		}
 		return null;
 	}
+	/** Returns the GestPay currency code from the ISO-4217 numeric code.
+	* @param int $currency The ISO-4217 numeric code of the currency.
+	* @return int|null Returns null if $currency is not a valid GestPay currency, one of the GestPayCurrency::... constants otherwise.
+	*/
+	public static function fromIsoCodeNum($currency) {
+		if(is_numeric($currency)) {
+			$currency = @intval($currency);
+			foreach(self::getAll(true) as $gestPayID) {
+				if(self::getIsoCodeNum($gestPayID) === $currency) {
+					return $gestPayID;
+				}
+			}
+		}
+		return null;
+	}
 	/** Returns the ISO-4217 alphabetic code of a currency.
 	* @param int $currency One of the GestPayCurrency::... constants
 	* @return string Returns an empty string if $currency is not valid.
@@ -160,6 +175,21 @@ class GestPayCurrency {
 			}
 		}
 		return '';
+	}
+	/** Returns the GestPay currency code from the ISO-4217 alphabetic code.
+	* @param string $currency The ISO-4217 alphabetic code of the currency.
+	* @return int|null Returns null if $currency is not a valid GestPay currency, one of the GestPayCurrency::... constants otherwise.
+	*/
+	public static function fromIsoCodeAlpha($currency) {
+		$currency = is_string($currency) ? strtoupper($currency) : '';
+		if(strlen($currency)) {
+			foreach(self::getAll(true) as $gestPayID) {
+				if(self::getIsoCodeAlpha($gestPayID) === $currency) {
+					return $gestPayID;
+				}
+			}
+		}
+		return null;
 	}
 	/** Returns the name of a currency.
 	* @param int $currency One of the GestPayCurrency::... constants
