@@ -44,10 +44,11 @@ class GestPay {
 		$this->setTest($test);
 	}
 	/** Returns the root URL for the current SSL/test settings.
+	* @param bool $forceSSL [default: false] Set to true if you the SSL root url even if instance is not configured to use SSL.
 	* @return string
 	*/
-	private function getRootURL() {
-		return ($this->getUseSSL() ? 'https://' : 'http://') . ($this->getTest() ? 'testecomm.sella.it' : 'ecomms2s.sella.it');
+	private function getRootURL($forceSSL = false) {
+		return (($forceSSL || $this->getUseSSL()) ? 'https://' : 'http://') . ($this->getTest() ? 'testecomm.sella.it' : 'ecomms2s.sella.it');
 	}
 	/** Sets the shop login.
 	* @param string $value The shop login
@@ -354,7 +355,7 @@ class GestPay {
 	* @return string
 	*/
 	public function getPaymentURL($encryptedString) {
-		return $this->getRootURL() . '/gestpay/pagam.asp?a=' . urlencode($this->getShopLogin()) . '&b=' . $encryptedString;
+		return $this->getRootURL(true) . '/gestpay/pagam.asp?a=' . urlencode($this->getShopLogin()) . '&b=' . $encryptedString;
 	}
 	/** Call remote server and returns the response.
 	* @param string $url The url to call.
