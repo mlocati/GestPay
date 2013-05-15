@@ -248,7 +248,7 @@ class GestPay {
 		if(!strlen($decryptedString)) {
 			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE, __FILE__, __LINE__);
 		}
-		$dectypted = array();
+		$decrypted = array();
 		$tags = array(
 			'PAY1_UICCODE' => 'currency',
 			'PAY1_AMOUNT' => 'amount',
@@ -272,50 +272,50 @@ class GestPay {
 			'PAY1_3DLEVEL' => '3dLevel',
 			'PAY1_OTP' => 'otp'
 		);
-		foreach(explode(self::SEPARATOR, $dectypted) as $chunk) {
+		foreach(explode(self::SEPARATOR, $decrypted) as $chunk) {
 			$outSet = false;
 			foreach($tags as $tagIn => $tagOut) {
 				$chunkStart = $tagIn . '=';
 				if(stripos($chunk, $chunkStart) === 0) {
 					$catched = true;
-					$dectypted[$tagOut] = (strlen($chunk) == strlen($chunkStart)) ? '' : self::decodeFieldValue(substr($chunk, 1 + strlen($chunkStart)));
+					$decrypted[$tagOut] = (strlen($chunk) == strlen($chunkStart)) ? '' : self::decodeFieldValue(substr($chunk, 1 + strlen($chunkStart)));
 					switch($tagOut) {
 						case 'currency':
-							GestPayCurrency::IsValid($dectypted[$tagOut], true);
+							GestPayCurrency::IsValid($decrypted[$tagOut], true);
 							break;
 						case 'amount':
-							if(is_numeric($dectypted[$tagOut]) && ($v = @floatval($dectypted[$tagOut]))) {
-								$dectypted[$tagOut] = $v;
+							if(is_numeric($decrypted[$tagOut]) && ($v = @floatval($decrypted[$tagOut]))) {
+								$decrypted[$tagOut] = $v;
 							}
 							break;
 						case 'errorCode':
 						case 'alertCode':
 						case 'expMonth':
 						case 'expYear':
-							if(is_numeric($dectypted[$tagOut])) {
-								$dectypted[$tagOut] = intval($dectypted[$tagOut]);
+							if(is_numeric($decrypted[$tagOut])) {
+								$decrypted[$tagOut] = intval($decrypted[$tagOut]);
 							}
 							break;
 						case 'language':
-							GestPayLanguage::IsValid($dectypted[$tagOut], true);
+							GestPayLanguage::IsValid($decrypted[$tagOut], true);
 							break;
 						case 'vbv':
-							if($dectypted[$tagOut] === 'OK') {
-								$dectypted[$tagOut] = true;
+							if($decrypted[$tagOut] === 'OK') {
+								$decrypted[$tagOut] = true;
 							}
-							elseif($dectypted[$tagOut] === 'KO') {
-								$dectypted[$tagOut] = false;
+							elseif($decrypted[$tagOut] === 'KO') {
+								$decrypted[$tagOut] = false;
 							}
 							break;
 						case 'transactionResult':
-							if($dectypted[$tagOut] === 'OK') {
-								$dectypted[$tagOut] = true;
+							if($decrypted[$tagOut] === 'OK') {
+								$decrypted[$tagOut] = true;
 							}
-							elseif($dectypted[$tagOut] === 'KO') {
-								$dectypted[$tagOut] = false;
+							elseif($decrypted[$tagOut] === 'KO') {
+								$decrypted[$tagOut] = false;
 							}
-							elseif($dectypted[$tagOut] === 'XX') {
-								$dectypted[$tagOut] = null;
+							elseif($decrypted[$tagOut] === 'XX') {
+								$decrypted[$tagOut] = null;
 							}
 							break;
 						}
@@ -324,14 +324,14 @@ class GestPay {
 			}
 			if(!$catched) {
 				if(strlen(trim($chunk))) {
-					if(!isset($dectypted['customInfo'])) {
-						$dectypted['customInfo'] = '';
+					if(!isset($decrypted['customInfo'])) {
+						$decrypted['customInfo'] = '';
 					}
-					$dectypted['customInfo'] .= self::decodeFieldValue($chunk);
+					$decrypted['customInfo'] .= self::decodeFieldValue($chunk);
 				}
 			}
 		}
-		if(empty($dectypted)) {
+		if(empty($decrypted)) {
 			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE, __FILE__, __LINE__);
 		}
 		return $decrypted;
