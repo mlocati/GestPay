@@ -207,7 +207,7 @@ class GestPay {
 	* @param string $cryptedString
 	* @return array The array may contain the following keys:<ul>
 	*	<li>int <b>currency</b> Currency ID (should be one of the GestPayCurrency:: constants).</li>
-	*	<li>float <b>amount</b> Transaction amount.</li>
+	*	<li>float|null <b>amount</b> Transaction amount.</li>
 	*	<li>string <b>transactionID</b> The identifier attributed to the transaction by the merchant.</li>
 	*	<li>string <b>buyerName</b> Buyer's name and surname.</li>
 	*	<li>string <b>buyerEmail</b> Buyer's email address.</li>
@@ -274,56 +274,55 @@ class GestPay {
 			'PAY1_OTP' => 'otp'
 		);
 		foreach(explode(self::SEPARATOR, $decryptedString) as $chunk) {
-			$outSet = false;
-			foreach($tags as $tagIn => $tagOut) {
-				$chunkStart = $tagIn . '=';
-				if(stripos($chunk, $chunkStart) === 0) {
-					$catched = true;
-					$decrypted[$tagOut] = (strlen($chunk) == strlen($chunkStart)) ? '' : self::decodeFieldValue(substr($chunk, 1 + strlen($chunkStart)));
-					switch($tagOut) {
-						case 'currency':
-							GestPayCurrency::IsValid($decrypted[$tagOut], true);
-							break;
-						case 'amount':
-							if(is_numeric($decrypted[$tagOut]) && ($v = @floatval($decrypted[$tagOut]))) {
-								$decrypted[$tagOut] = $v;
-							}
-							break;
-						case 'errorCode':
-						case 'alertCode':
-						case 'expMonth':
-						case 'expYear':
-							if(is_numeric($decrypted[$tagOut])) {
-								$decrypted[$tagOut] = intval($decrypted[$tagOut]);
-							}
-							break;
-						case 'language':
-							GestPayLanguage::IsValid($decrypted[$tagOut], true);
-							break;
-						case 'vbv':
-							if($decrypted[$tagOut] === 'OK') {
-								$decrypted[$tagOut] = true;
-							}
-							elseif($decrypted[$tagOut] === 'KO') {
-								$decrypted[$tagOut] = false;
-							}
-							break;
-						case 'transactionResult':
-							if($decrypted[$tagOut] === 'OK') {
-								$decrypted[$tagOut] = true;
-							}
-							elseif($decrypted[$tagOut] === 'KO') {
-								$decrypted[$tagOut] = false;
-							}
-							elseif($decrypted[$tagOut] === 'XX') {
-								$decrypted[$tagOut] = null;
-							}
-							break;
+			$equalsPos = strpos($chunk, '=');
+			if(($equalsPos !== false) && ($equalsPos > 0) && array_key_exists($tagIn = substr($chunk, 0, $equalsPos), $tags)) {
+				$tagOut = $tags[$tagIn];
+				$decrypted[$tagOut] = ($equalsPos == (strlen($chunk) - 1)) ? '' : self::decodeFieldValue(substr($chunk, $equalsPos + 1));
+				switch($tagOut) {
+					case 'currency':
+						GestPayCurrency::IsValid($decrypted[$tagOut], true);
+						break;
+					case 'amount':
+						if(!strlen($decrypted[$tagOut])) {
+							$decrypted[$tagOut] = null;
 						}
-					break;
+						elseif(is_numeric($decrypted[$tagOut]) && preg_match('/^-?(([0-9]+)|([0-9]+\.[0-9]*)|(\.[0-9]+))$/', $decrypted[$tagOut])) {
+							$decrypted[$tagOut] = @floatval($decrypted[$tagOut]);
+						}
+						break;
+					case 'errorCode':
+					case 'alertCode':
+					case 'expMonth':
+					case 'expYear':
+						if(is_numeric($decrypted[$tagOut])) {
+							$decrypted[$tagOut] = intval($decrypted[$tagOut]);
+						}
+						break;
+					case 'language':
+						GestPayLanguage::IsValid($decrypted[$tagOut], true);
+						break;
+					case 'vbv':
+						if($decrypted[$tagOut] === 'OK') {
+							$decrypted[$tagOut] = true;
+						}
+						elseif($decrypted[$tagOut] === 'KO') {
+							$decrypted[$tagOut] = false;
+						}
+						break;
+					case 'transactionResult':
+						if($decrypted[$tagOut] === 'OK') {
+							$decrypted[$tagOut] = true;
+						}
+						elseif($decrypted[$tagOut] === 'KO') {
+							$decrypted[$tagOut] = false;
+						}
+						elseif($decrypted[$tagOut] === 'XX') {
+							$decrypted[$tagOut] = null;
+						}
+						break;
 				}
 			}
-			if(!$catched) {
+			else {
 				if(strlen(trim($chunk))) {
 					if(!isset($decrypted['customInfo'])) {
 						$decrypted['customInfo'] = '';
