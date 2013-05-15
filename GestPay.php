@@ -8,6 +8,11 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'GestPayLanguage.php';
 
 /** Class to manage Banca Sella communication. */
 class GestPay {
+	/** When using test server shall the amount be set to a minimal amount?
+	* This is useful to not exceed the monthly limit of authorizable amount of the credit card.
+	* @var bool
+	*/
+	public static $useTinyAmountForTest = true;
 	/** Parameters separator in request/response to/from remote server.
 	* @var string
 	*/
@@ -164,6 +169,13 @@ class GestPay {
 		foreach($tags as $dataKey => $outKey) {
 			if(array_key_exists($dataKey, $data)) {
 				$value = strval($data[$dataKey]);
+				switch($dataKey) {
+					case 'amount':
+						if($this->getTest() && self::$useTinyAmountForTest) {
+							$value = '0.12';
+						}
+						break;
+				}
 				$fields[] = "$outKey=" . self::encodeFieldValue($value);
 			}
 		}
