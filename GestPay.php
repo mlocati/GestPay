@@ -121,7 +121,7 @@ class GestPay {
 		if((!array_key_exists('amount', $data)) || (!is_numeric($data['amount'])) || (($data['amount'] = @floatval($data['amount'])) <= 0.0)) {
 			throw GestPayException::fromCode(GestPayException::AMOUNT_NOT_VALID);
 		}
-		if((!array_key_exists('transactionID', $data)) || (!strlen($strval($data['transactionID'])))) {
+		if((!array_key_exists('transactionID', $data)) || (!strlen(@strval($data['transactionID'])))) {
 			throw GestPayException::fromCode(GestPayException::INVALID_TRANSACTIONID);
 		}
 		if(array_key_exists('language', $data) && (!GestPayLanguage::IsValid($data['language']))) {
