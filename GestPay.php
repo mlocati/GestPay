@@ -243,8 +243,8 @@ class GestPay {
 		$url .= '&c=' . urlencode(self::VERSION);
 		$response = self::callRemote($url);
 		$decryptedString = '';
-		if($decrypted('%#decryptstring#(.*)#/decryptstring#%s', $response, $m)) {
-			$encrypted = trim($m[1]);
+		if(preg_match('%#decryptstring#(.*)#/decryptstring#%s', $response, $m)) {
+			$decryptedString = trim($m[1]);
 		}
 		if(!strlen($decryptedString)) {
 			throw GestPayException::fromCode(GestPayException::EMPTY_RESPONSE, __FILE__, __LINE__);
@@ -273,7 +273,7 @@ class GestPay {
 			'PAY1_3DLEVEL' => '3dLevel',
 			'PAY1_OTP' => 'otp'
 		);
-		foreach(explode(self::SEPARATOR, $decrypted) as $chunk) {
+		foreach(explode(self::SEPARATOR, $decryptedString) as $chunk) {
 			$outSet = false;
 			foreach($tags as $tagIn => $tagOut) {
 				$chunkStart = $tagIn . '=';
